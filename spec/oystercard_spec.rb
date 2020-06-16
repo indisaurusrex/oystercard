@@ -33,4 +33,33 @@ describe Oystercard do
     end
   end
 
+  describe '#in_journey' do
+    it 'responds with false if not in a journey' do
+      expect(subject.in_journey).to eq(false)
+    end
+
+    it 'responds with true if in a journey' do
+      subject.touch_in
+      expect(subject.in_journey).to eq(true)
+    end
+
+    it 'responds with false if touched out from a journey' do
+      subject.touch_in
+      subject.touch_out
+      expect(subject.in_journey).to eq(false)
+    end
+  end
+
+  describe '#touch_in' do
+    it 'responds to touch in' do
+      expect(subject).to respond_to :touch_in
+    end
+  end
+
+  describe '#touch_out' do
+    it 'responds to touch out' do
+      expect(subject).to respond_to :touch_out
+    end
+  end
+
 end
