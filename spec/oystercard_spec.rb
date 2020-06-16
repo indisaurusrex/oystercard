@@ -2,6 +2,13 @@ require 'oystercard'
 
 describe Oystercard do
 
+  describe '#initialize' do
+    it 'can override the default balance when creating a new card' do
+      card = Oystercard.new(40)
+      expect(card.balance).to eq(40)
+    end
+  end 
+
   describe '@balance' do
     it 'initializes a new card with a default balance of 0' do
       expect(subject.balance).to eq(0)

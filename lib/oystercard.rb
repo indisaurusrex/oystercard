@@ -5,8 +5,8 @@ class Oystercard
   BALANCE_ERROR = "Topup will exceed maximum balance of #{MAXIMUM_BALANCE}, Topup not processed"
   attr_reader :balance
 
-  def initialize
-    @balance = DEFAULT_START_BALANCE
+  def initialize(balance = DEFAULT_START_BALANCE)
+    @balance = balance
   end
 
   def top_up(credit)
