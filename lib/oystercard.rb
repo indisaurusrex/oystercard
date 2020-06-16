@@ -5,7 +5,7 @@ class Oystercard
   MINIMUM_FARE = 1
   MAXIMUM_BALANCE_ERROR = "Topup will exceed maximum balance, Topup not processed"
   MINIMUM_FARE_ERROR = "Insufficient Funds"
-  attr_reader :balance, :in_journey
+  attr_reader :balance, :in_journey, :journeys, :entry_station
 
   def initialize(balance = DEFAULT_START_BALANCE)
     @balance = balance
@@ -16,13 +16,15 @@ class Oystercard
     @balance + credit > MAXIMUM_BALANCE ? raise(MAXIMUM_BALANCE_ERROR) : @balance += credit
   end
 
-  def touch_in
+  def touch_in(station)
     fail MINIMUM_FARE_ERROR if @balance < MINIMUM_FARE
+    @entry_station = station
     @in_journey = true
   end
 
   def touch_out(fare = MINIMUM_FARE)
     @in_journey = false
+    @entry_station = nil
     deduct(fare)
   end
 
