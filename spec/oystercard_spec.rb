@@ -25,13 +25,14 @@ describe Oystercard do
     end
   end
 
-  describe '#deduct' do
-    it 'deducts the fare from the balance' do
-      subject.top_up(10)
-      subject.deduct(2.40)
-      expect(subject.balance).to eq(7.60)
-    end
-  end
+  # deduct is now private, so test commented out
+  # describe '#deduct' do
+  #   it 'deducts the fare from the balance' do
+  #     subject.top_up(10)
+  #     subject.deduct(2.40)
+  #     expect(subject.balance).to eq(7.60)
+  #   end
+  # end
 
   describe '#in_journey' do
     it 'responds with false if not in a journey' do
@@ -65,6 +66,13 @@ describe Oystercard do
     it 'responds to touch out' do
       expect(subject).to respond_to :touch_out
     end
+    it 'deducts the minimum fare from the balance' do
+      card = Oystercard.new(5)
+      card.touch_in
+      expect { card.touch_out }.to change{ card.balance }.by(-1)
+      # -1 will need to change if MINIMUM_FARE is altered
+    end
+
   end
 
 end
