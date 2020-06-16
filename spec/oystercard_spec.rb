@@ -21,7 +21,7 @@ describe Oystercard do
       expect(subject.balance).to eq(9)
     end
     it 'will raise an exception when a topup will exceed the maximum value of 90' do #starting with 90 but could be removed to make test better
-      expect {subject.top_up(100)}.to raise_error("Topup will exceed maximum balance of 90, Topup not processed")
+      expect {subject.top_up(100)}.to raise_error("Topup will exceed maximum balance, Topup not processed")
     end
   end
 
@@ -39,11 +39,13 @@ describe Oystercard do
     end
 
     it 'responds with true if in a journey' do
+      subject.top_up(1)
       subject.touch_in
       expect(subject.in_journey).to eq(true)
     end
 
     it 'responds with false if touched out from a journey' do
+      subject.top_up(1)
       subject.touch_in
       subject.touch_out
       expect(subject.in_journey).to eq(false)
@@ -53,6 +55,9 @@ describe Oystercard do
   describe '#touch_in' do
     it 'responds to touch in' do
       expect(subject).to respond_to :touch_in
+    end
+    it 'raises error if less than £1 on card' do
+      expect { subject.touch_in }.to raise_error("Insufficient Funds")
     end
   end
 
